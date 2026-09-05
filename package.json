@@ -1,0 +1,58 @@
+{
+  "name": "radial-vocab-video-studio",
+  "version": "0.1.0",
+  "description": "A local-first studio for turning vocabulary and word roots into narrated radial videos.",
+  "private": true,
+  "license": "MIT",
+  "author": "SoloShow Labs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/soloshow-labs/radial-vocab-video-studio.git"
+  },
+  "bugs": {
+    "url": "https://github.com/soloshow-labs/radial-vocab-video-studio/issues"
+  },
+  "homepage": "https://github.com/soloshow-labs/radial-vocab-video-studio#readme",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@11.22.0",
+  "scripts": {
+    "dev": "tsx scripts/dev.ts",
+    "dev:ui": "vite --host 127.0.0.1",
+    "dev:server": "tsx watch src/server/index.ts",
+    "test:render": "tsx scripts/render-smoke.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc --noEmit && vite build"
+  },
+  "dependencies": {
+    "@fastify/multipart": "^10.1.1",
+    "@remotion/bundler": "4.0.520",
+    "@remotion/media": "4.0.520",
+    "@remotion/media-parser": "4.0.520",
+    "@remotion/renderer": "4.0.520",
+    "@vitejs/plugin-react": "6.0.3",
+    "fastify": "^5.12.1",
+    "microsoft-cognitiveservices-speech-sdk": "^1.51.0",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "remotion": "4.0.520",
+    "vite": "8.0.16"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "6.9.1",
+    "@testing-library/react": "16.3.2",
+    "@testing-library/user-event": "14.6.1",
+    "@types/node": "24.13.2",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "concurrently": "^10.0.5",
+    "jsdom": "27.0.0",
+    "tsx": "^4.23.13",
+    "typescript": "6.0.3",
+    "vitest": "4.1.9"
+  }
+}

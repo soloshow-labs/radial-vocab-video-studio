@@ -1,0 +1,32 @@
+:root {
+  --color-ink: #171717;
+  --color-body: #4d4d4d;
+  --color-muted: #737373;
+  --color-line: #ebebeb;
+  --color-line-strong: #dedede;
+  --color-canvas: #fafafa;
+  --color-surface: #ffffff;
+  --color-focus: #171717;
+  --color-error: #c91919;
+  --color-warning: #8a5a00;
+  --color-success: #2f7d3d;
+  --radius-control: 6px;
+  --radius-surface: 12px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --control-height: 36px;
+  --button-height: 32px;
+  --label-control-gap: 6px;
+  --field-gap: 16px;
+  --font-ui: Geist, Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  color: var(--color-ink);
+  background: var(--color-canvas);
+  font-family: var(--font-ui);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
