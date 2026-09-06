@@ -101,6 +101,18 @@ textarea:focus-visible {
   white-space: nowrap;
 }
 
+.studio-brand__demo {
+  flex: 0 0 auto;
+  border-left: 1px solid var(--color-line-strong);
+  padding-left: 8px;
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
 .studio-project {
   gap: var(--space-2);
   border-right: 1px solid var(--color-line);
@@ -193,6 +205,29 @@ textarea:focus-visible {
 .studio-notice--success {
   border-color: #b9dfc0;
   color: var(--color-success);
+}
+
+.demo-bar {
+  display: flex;
+  min-height: 34px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-bottom: 1px solid var(--color-line);
+  padding: 6px 18px;
+  background: var(--color-canvas);
+  color: var(--color-body);
+  font-size: 11px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.demo-bar a {
+  color: var(--color-ink);
+  font-weight: 500;
+  text-underline-offset: 3px;
+  white-space: nowrap;
 }
 
 .locale-switch {
@@ -976,6 +1011,11 @@ textarea:focus-visible {
   white-space: nowrap;
 }
 
+.demo-file-note {
+  margin-top: calc(var(--field-gap) * -1 + 6px);
+  margin-bottom: var(--field-gap);
+}
+
 .word-layout-list {
   display: grid;
   gap: 8px;
@@ -1050,6 +1090,10 @@ textarea:focus-visible {
 
 .status--error::before {
   background: var(--color-error);
+}
+
+.status--demo::before {
+  background: #8a8a8a;
 }
 
 .connection-card__meta {
@@ -1659,6 +1703,16 @@ textarea:focus-visible {
 
   .studio-actions .button--secondary {
     display: none;
+  }
+
+  .studio-brand__demo {
+    display: none;
+  }
+
+  .demo-bar {
+    align-items: flex-start;
+    justify-content: space-between;
+    text-align: left;
   }
 
   .studio-workspace {

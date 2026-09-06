@@ -26,6 +26,7 @@ const MESSAGES: Record<string, [string, string]> = {
   render_queue_full: ["已有多个任务等待生成，请稍后再试。", "The render queue is full. Try again later."],
   render_timeout: ["视频生成等待超时，请重新尝试。", "Video rendering timed out. Try again."],
   render_failed: ["视频生成失败，请检查素材与语音设置。", "Video rendering failed. Check the media and voice settings."],
+  demo_local_only: ["在线体验版不提供语音试听或 MP4 生成，请使用本地版。", "Speech preview and MP4 rendering are unavailable in the live demo. Use the local app instead."],
   request_failed: ["操作失败，请稍后重试。", "The request failed. Try again."],
 };
 

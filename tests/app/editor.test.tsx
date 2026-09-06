@@ -45,6 +45,48 @@ describe("three-column editor", () => {
     expect(screen.getByRole("button", {name: "Generate video"})).toBeInTheDocument();
   });
 
+  it("runs the public demo without contacting local APIs", async () => {
+    const user = userEvent.setup();
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+    render(<App demoMode />);
+
+    expect(screen.getByRole("note")).toHaveTextContent("在线体验版支持编辑、导入导出和实时预览");
+    expect(screen.getByText("在线体验")).toBeInTheDocument();
+    expect(screen.getByRole("button", {name: "本地版生成视频"})).toBeDisabled();
+
+    await user.click(screen.getByRole("button", {name: "语音与音乐"}));
+
+    expect(screen.getByText("在线体验版未连接语音服务")).toBeInTheDocument();
+    expect(screen.getByRole("button", {name: "测试连接"})).toBeDisabled();
+    expect(screen.getByRole("button", {name: "试听词根"})).toBeDisabled();
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("previews a background file locally in demo mode without uploading it", async () => {
+    const user = userEvent.setup();
+    const fetchMock = vi.fn();
+    const createObjectURL = vi.fn(() => "blob:demo-video");
+    const revokeObjectURL = vi.fn();
+    const NativeURL = URL;
+    vi.stubGlobal("fetch", fetchMock);
+    vi.stubGlobal("URL", class extends NativeURL {
+      static createObjectURL = createObjectURL;
+      static revokeObjectURL = revokeObjectURL;
+    });
+    const {container} = render(<App demoMode />);
+
+    await user.click(screen.getByRole("button", {name: "背景视频"}));
+    const input = container.querySelector<HTMLInputElement>('input[type="file"][accept*="video/mp4"]');
+    expect(input).not.toBeNull();
+    await user.upload(input!, new File(["video"], "demo.mp4", {type: "video/mp4"}));
+
+    expect(screen.getByText("demo.mp4")).toBeInTheDocument();
+    expect(screen.getByText("文件只在当前浏览器标签页中预览，不会上传到服务器。")).toBeInTheDocument();
+    expect(container.querySelector("video")).toHaveAttribute("src", "blob:demo-video");
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
   it("changes modules without hiding the preview", async () => {
     const user = userEvent.setup();
     render(<App />);

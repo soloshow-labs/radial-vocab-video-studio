@@ -26,7 +26,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
-    "build": "tsc --noEmit && vite build"
+    "build": "tsc --noEmit && vite build",
+    "build:demo": "tsc --noEmit && vite build --mode demo"
   },
   "dependencies": {
     "@fastify/multipart": "^10.1.1",

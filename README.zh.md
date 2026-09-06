@@ -8,6 +8,12 @@ Radial Vocab Video Studio 是一款本地优先的词根放射视频编辑器。
 
 微信公众号：一人独角show
 
+## 在线体验版
+
+仓库提供了适合 Cloudflare Pages 的静态体验版。体验版支持编辑内容、实时预览画面、导入导出 JSON 项目，以及直接在当前浏览器标签页中预览本地背景视频和音乐。本地素材不会上传到服务器。
+
+为了保护 API 密钥并避免公共服务消耗你的 Azure 额度，在线体验版不会连接 Azure Speech，也不提供语音试听和 MP4 生成。需要完整功能时，请按照下面的说明在本地安装运行。
+
 ## 主要功能
 
 - 词根放射布局，可调整单词位置、箭头长度、颜色、字体和时间参数
@@ -106,6 +112,26 @@ pnpm test:render
 `pnpm test:render` 会使用测试语音生成一段短 MP4。如果系统中恰好安装了 `ffprobe`，脚本还会额外检查视频和音频轨道；应用本身不需要单独安装 FFmpeg。
 
 React/Vite 编辑器位于 `src/app` 和 `src/features`，Fastify API 位于 `src/server`，共享项目类型位于 `src/domain`，Remotion 视频组件位于 `src/remotion`。
+
+在本地检查 Cloudflare Pages 体验版：
+
+```bash
+pnpm build:demo
+pnpm exec vite preview --host 127.0.0.1
+```
+
+## 部署到 Cloudflare Pages
+
+在 Cloudflare Pages 中连接这个 GitHub 仓库，并填写以下设置：
+
+| 设置 | 内容 |
+| --- | --- |
+| 生产分支 | `main` |
+| 构建命令 | `pnpm build:demo` |
+| 构建输出目录 | `dist` |
+| 根目录 | `/` |
+
+静态体验版不需要填写 Azure 密钥或其他 Secret。代码合并到配置好的生产分支后，Cloudflare 会自动重新构建。仓库中的 `public/_headers` 会为线上页面添加浏览器安全响应头。
 
 ## 安全说明
 

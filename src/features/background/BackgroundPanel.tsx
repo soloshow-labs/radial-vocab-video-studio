@@ -9,9 +9,11 @@ type BackgroundPanelProps = {
   dispatch: Dispatch<ProjectAction>;
   onFile: (file: File | null) => void;
   uploading: boolean;
+  localFileName?: string;
+  demoMode?: boolean;
 };
 
-export function BackgroundPanel({project, dispatch, onFile, uploading}: BackgroundPanelProps) {
+export function BackgroundPanel({project, dispatch, onFile, uploading, localFileName, demoMode = false}: BackgroundPanelProps) {
   const {t} = useI18n();
   const uploadId = useId();
   const handleFile = (event: ChangeEvent<HTMLInputElement>) => onFile(event.currentTarget.files?.[0] ?? null);
@@ -21,11 +23,12 @@ export function BackgroundPanel({project, dispatch, onFile, uploading}: Backgrou
       <div className="file-drop">
         <input id={uploadId} type="file" accept="video/mp4,video/webm,video/quicktime" disabled={uploading} onChange={handleFile} />
         <label htmlFor={uploadId}>
-          <span className={project.background.asset ? "file-name" : undefined}>
-            {uploading ? t("common.uploading") : project.background.asset?.name ?? t("background.upload")}
+          <span className={project.background.asset || localFileName ? "file-name" : undefined}>
+            {uploading ? t("common.uploading") : localFileName ?? project.background.asset?.name ?? t("background.upload")}
           </span>
         </label>
       </div>
+      {demoMode ? <p className="control-note demo-file-note">{t("demo.localFileHint")}</p> : null}
       <div className="inspector-grid">
         <Field label={t("background.ratio")} htmlFor="canvas-preset">
           <select id="canvas-preset" value={project.canvas.preset} onChange={(event) => dispatch({type: "canvas.preset", preset: event.currentTarget.value as keyof typeof CANVAS_PRESETS})}>

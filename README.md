@@ -8,6 +8,12 @@ Maintained by [SoloShow Labs](https://github.com/soloshow-labs).
 
 WeChat Official Account: 一人独角show
 
+## Live demo
+
+The repository includes a static demo build for Cloudflare Pages. The demo supports editing, real-time visual preview, JSON import/export, and browser-local background media preview. Local media never leaves the current browser tab.
+
+Azure Speech preview and MP4 rendering are deliberately disabled in the public demo. Install the project locally for the complete workflow; this keeps API credentials private and prevents a shared public service from consuming your Azure quota.
+
 ## Highlights
 
 - Radial word-root layouts with editable positions, arrow lengths, colors, typography, and timing
@@ -106,6 +112,26 @@ pnpm test:render
 `pnpm test:render` creates a short narrated MP4 using a synthetic test voice. When a system `ffprobe` is available, the script also performs an optional second check of the video and audio streams; the application itself does not require FFmpeg to be installed separately.
 
 The React/Vite editor lives in `src/app` and `src/features`, the Fastify API in `src/server`, shared project types in `src/domain`, and the Remotion composition in `src/remotion`.
+
+To verify the Cloudflare Pages demo build locally:
+
+```bash
+pnpm build:demo
+pnpm exec vite preview --host 127.0.0.1
+```
+
+## Deploy the public demo to Cloudflare Pages
+
+Create a Cloudflare Pages project from this GitHub repository and use:
+
+| Setting | Value |
+| --- | --- |
+| Production branch | `main` |
+| Build command | `pnpm build:demo` |
+| Build output directory | `dist` |
+| Root directory | `/` |
+
+No Azure credentials or other secrets are required for the static demo. Cloudflare rebuilds the site after changes reach the configured production branch. The checked-in `public/_headers` file applies browser security headers to the deployed site.
 
 ## Security
 

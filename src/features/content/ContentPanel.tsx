@@ -13,9 +13,10 @@ type ContentPanelProps = {
   dispatch: Dispatch<ProjectAction>;
   onPreviewSpeech: (text: string, meaningZh?: string) => void;
   previewingSpeech: boolean;
+  speechDisabled?: boolean;
 };
 
-export function ContentPanel({project, dispatch, onPreviewSpeech, previewingSpeech}: ContentPanelProps) {
+export function ContentPanel({project, dispatch, onPreviewSpeech, previewingSpeech, speechDisabled = false}: ContentPanelProps) {
   const {t} = useI18n();
   const [bulkText, setBulkText] = useState("");
   const [firstAsRoot, setFirstAsRoot] = useState(false);
@@ -72,7 +73,7 @@ export function ContentPanel({project, dispatch, onPreviewSpeech, previewingSpee
       {parsedPairs.length === 0 ? <p className="control-note">{t("content.recognizeEmpty")}</p> : null}
       <div className="inline-action-row content-preview-row">
         <span>{t("content.rootPreviewHint")}</span>
-        <button className="text-action" type="button" disabled={previewingSpeech || !project.root.text.trim()} onClick={() => onPreviewSpeech(project.root.text, project.root.meaningZh)}>
+        <button className="text-action" type="button" disabled={speechDisabled || previewingSpeech || !project.root.text.trim()} title={speechDisabled ? t("demo.previewDisabled") : undefined} onClick={() => onPreviewSpeech(project.root.text, project.root.meaningZh)}>
           <AudioIcon /> {t("content.rootPreview")}
         </button>
       </div>
@@ -98,7 +99,7 @@ export function ContentPanel({project, dispatch, onPreviewSpeech, previewingSpee
               value={word.meaningZh}
               onChange={(event) => dispatch({type: "word.update", index, patch: {meaningZh: event.currentTarget.value}})}
             />
-            <button className="icon-button" type="button" disabled={previewingSpeech || !word.text.trim()} aria-label={`${t("words.preview")} ${index + 1}`} onClick={() => onPreviewSpeech(word.text, word.meaningZh)}>
+            <button className="icon-button" type="button" disabled={speechDisabled || previewingSpeech || !word.text.trim()} title={speechDisabled ? t("demo.previewDisabled") : undefined} aria-label={`${t("words.preview")} ${index + 1}`} onClick={() => onPreviewSpeech(word.text, word.meaningZh)}>
               <AudioIcon />
             </button>
             <button className="icon-button icon-button--danger" type="button" aria-label={`${t("words.remove")} ${index + 1}`} onClick={() => dispatch({type: "word.remove", index})}>

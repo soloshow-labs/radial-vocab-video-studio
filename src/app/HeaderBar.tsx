@@ -2,8 +2,7 @@ import {useRef, type ChangeEvent} from "react";
 import {useI18n} from "../i18n/I18nProvider";
 import {Button} from "../ui/Button";
 import {BrandMark, GitHubIcon} from "../ui/icons";
-
-const GITHUB_REPOSITORY_URL = "https://github.com/soloshow-labs/radial-vocab-video-studio";
+import {GITHUB_REPOSITORY_URL} from "./runtime";
 
 type HeaderBarProps = {
   projectName: string;
@@ -11,9 +10,10 @@ type HeaderBarProps = {
   onImport: (file: File) => void;
   onExport: () => void;
   saveState: "saved" | "saving" | "error";
+  demoMode?: boolean;
 };
 
-export function HeaderBar({projectName, onRename, onImport, onExport, saveState}: HeaderBarProps) {
+export function HeaderBar({projectName, onRename, onImport, onExport, saveState, demoMode = false}: HeaderBarProps) {
   const {locale, setLocale, t} = useI18n();
   const importInput = useRef<HTMLInputElement>(null);
   const handleImport = (event: ChangeEvent<HTMLInputElement>) => {
@@ -27,6 +27,7 @@ export function HeaderBar({projectName, onRename, onImport, onExport, saveState}
       <div className="studio-brand">
         <span className="studio-brand__mark"><BrandMark /></span>
         <h1>{t("app.name")}</h1>
+        {demoMode ? <span className="studio-brand__demo">{t("demo.badge")}</span> : null}
       </div>
       <div className="studio-project">
         <label className="studio-project__field">

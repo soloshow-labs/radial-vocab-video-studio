@@ -31,6 +31,9 @@ type InspectorProps = {
   onGenerate: () => void;
   generating: boolean;
   onIssueSelect: (issue: ProjectIssue) => void;
+  demoMode?: boolean;
+  backgroundFileName?: string;
+  musicFileName?: string;
 };
 
 const HEADINGS = {
@@ -42,7 +45,7 @@ const HEADINGS = {
   output: ["output.title", "output.description"],
 } as const;
 
-export function Inspector({active, project, dispatch, onBackgroundFile, onMusicFile, uploading, ttsState, ttsVoices, ttsVoicesLoading, ttsVoicesFailed, previewingSpeech, onTestSpeech, onPreviewSpeech, renderJob, onGenerate, generating, onIssueSelect}: InspectorProps) {
+export function Inspector({active, project, dispatch, onBackgroundFile, onMusicFile, uploading, ttsState, ttsVoices, ttsVoicesLoading, ttsVoicesFailed, previewingSpeech, onTestSpeech, onPreviewSpeech, renderJob, onGenerate, generating, onIssueSelect, demoMode = false, backgroundFileName, musicFileName}: InspectorProps) {
   const {t} = useI18n();
   const [title, description] = HEADINGS[active];
   const validation = validateProject(project);
@@ -55,19 +58,19 @@ export function Inspector({active, project, dispatch, onBackgroundFile, onMusicF
         <p>{t(description)}</p>
       </header>
       <div className="inspector-body">
-        {active === "content" ? <ContentPanel project={project} dispatch={dispatch} onPreviewSpeech={onPreviewSpeech} previewingSpeech={previewingSpeech} /> : null}
-        {active === "background" ? <BackgroundPanel project={project} dispatch={dispatch} onFile={onBackgroundFile} uploading={uploading === "video"} /> : null}
+        {active === "content" ? <ContentPanel project={project} dispatch={dispatch} onPreviewSpeech={onPreviewSpeech} previewingSpeech={previewingSpeech} speechDisabled={demoMode} /> : null}
+        {active === "background" ? <BackgroundPanel project={project} dispatch={dispatch} onFile={onBackgroundFile} uploading={uploading === "video"} localFileName={backgroundFileName} demoMode={demoMode} /> : null}
         {active === "layout" ? <LayoutPanel project={project} dispatch={dispatch} /> : null}
         {active === "style" ? <StylePanel project={project} dispatch={dispatch} /> : null}
-        {active === "audio" ? <AudioPanel project={project} dispatch={dispatch} onMusicFile={onMusicFile} uploading={uploading === "audio"} ttsState={ttsState} voices={ttsVoices} voicesLoading={ttsVoicesLoading} voicesFailed={ttsVoicesFailed} onTest={onTestSpeech} onPreview={() => onPreviewSpeech(project.root.text, project.root.meaningZh)} previewing={previewingSpeech} /> : null}
+        {active === "audio" ? <AudioPanel project={project} dispatch={dispatch} onMusicFile={onMusicFile} uploading={uploading === "audio"} ttsState={ttsState} voices={ttsVoices} voicesLoading={ttsVoicesLoading} voicesFailed={ttsVoicesFailed} onTest={onTestSpeech} onPreview={() => onPreviewSpeech(project.root.text, project.root.meaningZh)} previewing={previewingSpeech} demoMode={demoMode} localFileName={musicFileName} /> : null}
         {active === "output" ? <OutputPanel project={project} renderJob={renderJob} onIssueSelect={onIssueSelect} /> : null}
       </div>
       <footer className="inspector-footer">
         <span id="generate-readiness" className={`inspector-footer__summary ${issueCount ? "inspector-footer__summary--error" : ""}`}>
           {issueCount ? blockedText : `${project.canvas.preset} · ${project.canvas.width} × ${project.canvas.height} · ${project.canvas.fps} FPS`}
         </span>
-        <Button variant="primary" disabled={generating || !validation.ok} aria-describedby="generate-readiness" title={issueCount ? blockedText : undefined} onClick={onGenerate}>
-          {generating ? `${t("app.generating")} · ${Math.round((renderJob?.progress ?? 0) * 100)}%` : t("app.generate")}
+        <Button variant="primary" disabled={demoMode || generating || !validation.ok} aria-describedby="generate-readiness" title={demoMode ? t("demo.generateHint") : issueCount ? blockedText : undefined} onClick={onGenerate}>
+          {demoMode ? t("demo.generate") : generating ? `${t("app.generating")} · ${Math.round((renderJob?.progress ?? 0) * 100)}%` : t("app.generate")}
         </Button>
       </footer>
     </section>

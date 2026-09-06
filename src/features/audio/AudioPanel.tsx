@@ -20,6 +20,8 @@ type AudioPanelProps = {
   onTest: () => void;
   onPreview: () => void;
   previewing: boolean;
+  demoMode?: boolean;
+  localFileName?: string;
 };
 
 const FALLBACK_VOICES: TtsVoice[] = [
@@ -33,7 +35,7 @@ const FALLBACK_VOICES: TtsVoice[] = [
   {shortName: "zh-CN-YunxiNeural", locale: "zh-CN", localName: "云希", gender: "male"},
 ];
 
-export function AudioPanel({project, dispatch, onMusicFile, uploading, ttsState, voices, voicesLoading, voicesFailed, onTest, onPreview, previewing}: AudioPanelProps) {
+export function AudioPanel({project, dispatch, onMusicFile, uploading, ttsState, voices, voicesLoading, voicesFailed, onTest, onPreview, previewing, demoMode = false, localFileName}: AudioPanelProps) {
   const {t} = useI18n();
   const musicId = useId();
   const handleMusic = (event: ChangeEvent<HTMLInputElement>) => onMusicFile(event.currentTarget.files?.[0] ?? null);
@@ -62,10 +64,10 @@ export function AudioPanel({project, dispatch, onMusicFile, uploading, ttsState,
         <div className="connection-card__row">
           <div>
             <strong>{t("audio.azure")}</strong>
-            <div className={`status status--${ttsState}`}>{statusText(ttsState, t)}</div>
-            <div className="connection-card__meta">{t("audio.credentialsSource")}</div>
+            <div className={`status status--${demoMode ? "demo" : ttsState}`}>{demoMode ? t("demo.ttsStatus") : statusText(ttsState, t)}</div>
+            <div className="connection-card__meta">{demoMode ? t("demo.ttsSource") : t("audio.credentialsSource")}</div>
           </div>
-          <Button disabled={ttsState === "checking"} onClick={onTest}>{ttsState === "checking" ? t("common.checking") : t("audio.test")}</Button>
+          <Button disabled={demoMode || ttsState === "checking"} title={demoMode ? t("demo.previewDisabled") : undefined} onClick={onTest}>{ttsState === "checking" ? t("common.checking") : t("audio.test")}</Button>
         </div>
       </div>
       <div className="inspector-grid">
@@ -89,14 +91,15 @@ export function AudioPanel({project, dispatch, onMusicFile, uploading, ttsState,
       </Field>
       <div className="inline-action-row audio-preview-row">
         <span>{t("audio.previewHint")}</span>
-        <Button disabled={previewing || !project.root.text.trim()} onClick={onPreview}>{previewing ? t("audio.previewing") : t("content.rootPreview")}</Button>
+        <Button disabled={demoMode || previewing || !project.root.text.trim()} title={demoMode ? t("demo.previewDisabled") : undefined} onClick={onPreview}>{previewing ? t("audio.previewing") : t("content.rootPreview")}</Button>
       </div>
       <div className="section-divider"><h3>{t("audio.music")}</h3></div>
       <div className="file-drop">
         <input id={musicId} type="file" accept="audio/mpeg,audio/wav,audio/mp4,audio/ogg" disabled={uploading} onChange={handleMusic} />
-        <label htmlFor={musicId}><span className={project.music.asset ? "file-name" : undefined}>{uploading ? t("common.uploading") : project.music.asset?.name ?? t("audio.uploadMusic")}</span></label>
+        <label htmlFor={musicId}><span className={project.music.asset || localFileName ? "file-name" : undefined}>{uploading ? t("common.uploading") : localFileName ?? project.music.asset?.name ?? t("audio.uploadMusic")}</span></label>
       </div>
-      <Field label={t("audio.musicVolume")} hint={`${Math.round(project.music.volume * 100)}%`} htmlFor="music-volume"><input id="music-volume" type="range" min="0" max="1" step="0.01" disabled={!project.music.asset} value={project.music.volume} onChange={(event) => dispatch({type: "music.update", patch: {volume: numberOr(event.currentTarget.value, 0)}})} /></Field>
+      {demoMode ? <p className="control-note demo-file-note">{t("demo.localFileHint")}</p> : null}
+      <Field label={t("audio.musicVolume")} hint={`${Math.round(project.music.volume * 100)}%`} htmlFor="music-volume"><input id="music-volume" type="range" min="0" max="1" step="0.01" disabled={!project.music.asset && !localFileName} value={project.music.volume} onChange={(event) => dispatch({type: "music.update", patch: {volume: numberOr(event.currentTarget.value, 0)}})} /></Field>
     </>
   );
 }
