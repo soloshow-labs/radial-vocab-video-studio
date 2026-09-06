@@ -1,6 +1,6 @@
 # Radial Vocab Video Studio
 
-[English](README.md) | 简体中文 | [GitHub 项目](https://github.com/soloshow-labs/radial-vocab-video-studio)
+[English](README.md) | 简体中文 | [在线体验](https://radial-vocab-video-studio.pages.dev/) | [GitHub 项目](https://github.com/soloshow-labs/radial-vocab-video-studio)
 
 Radial Vocab Video Studio 是一款本地优先的词根放射视频编辑器。你可以在三栏工作区中编辑词根、词缀和关联单词，实时预览画面，并通过 Azure Speech 生成带朗读的 MP4 视频。
 
@@ -9,6 +9,8 @@ Radial Vocab Video Studio 是一款本地优先的词根放射视频编辑器。
 微信公众号：一人独角show
 
 ## 在线体验版
+
+访问 [radial-vocab-video-studio.pages.dev](https://radial-vocab-video-studio.pages.dev/) 即可在线体验静态版本。
 
 仓库提供了适合 Cloudflare Pages 的静态体验版。体验版支持编辑内容、实时预览画面、导入导出 JSON 项目，以及直接在当前浏览器标签页中预览本地背景视频和音乐。本地素材不会上传到服务器。
 

@@ -1,6 +1,6 @@
 # Radial Vocab Video Studio
 
-English | [简体中文](README.zh.md) | [GitHub repository](https://github.com/soloshow-labs/radial-vocab-video-studio)
+English | [简体中文](README.zh.md) | [Live demo](https://radial-vocab-video-studio.pages.dev/) | [GitHub repository](https://github.com/soloshow-labs/radial-vocab-video-studio)
 
 Radial Vocab Video Studio is a local-first editor for turning word roots, affixes, and related vocabulary into narrated radial videos. Edit the content and visual settings in a three-column workspace, preview the composition in real time, and export an MP4 with Azure Speech narration.
 
@@ -9,6 +9,8 @@ Maintained by [SoloShow Labs](https://github.com/soloshow-labs).
 WeChat Official Account: 一人独角show
 
 ## Live demo
+
+Try the static demo at [radial-vocab-video-studio.pages.dev](https://radial-vocab-video-studio.pages.dev/).
 
 The repository includes a static demo build for Cloudflare Pages. The demo supports editing, real-time visual preview, JSON import/export, and browser-local background media preview. Local media never leaves the current browser tab.
 
