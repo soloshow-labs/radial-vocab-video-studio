@@ -3,6 +3,9 @@ dist/
 coverage/
 storage/
 /output/
+.venv/
+.wrangler/
+.dev.vars
 *.log
 .DS_Store
 
