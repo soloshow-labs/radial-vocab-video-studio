@@ -49,6 +49,7 @@ macOS 或 Linux：
 
 ```bash
 cp .env.example .env
+chmod 600 .env
 ```
 
 Windows PowerShell：
@@ -135,7 +136,9 @@ pnpm exec vite preview --host 127.0.0.1
 
 ## 安全说明
 
-后端仅监听本机地址，只允许已配置的前端来源访问；所有修改请求都需要临时会话令牌；上传文件会经过类型、大小和文件名检查；Azure 密钥不会返回给前端。发现安全问题时，请按照 [SECURITY.md](SECURITY.md) 中的方式联系维护者。
+完整版后端只适合在可信的个人电脑上使用。它仅监听 `127.0.0.1`，会拒绝来自其他网页来源的请求；所有修改请求都需要临时会话令牌；上传文件会经过类型、大小和文件名检查；Azure 密钥不会返回给前端。
+
+来源检查和会话令牌用于防止其他网页跨站调用，并不能鉴别同一台电脑上的不同程序或系统用户。请勿通过网络代理、端口转发或隧道把本地 API 暴露到局域网或公网，也不要把完整版后端当作多人共享服务。发现安全问题时，请按照 [SECURITY.md](SECURITY.md) 中的方式联系维护者。
 
 如有使用问题或功能建议，可以提交 [GitHub Issue](https://github.com/soloshow-labs/radial-vocab-video-studio/issues)，也可以关注微信公众号 **一人独角show**。
 

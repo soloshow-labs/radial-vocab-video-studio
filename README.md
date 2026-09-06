@@ -49,6 +49,7 @@ macOS or Linux:
 
 ```bash
 cp .env.example .env
+chmod 600 .env
 ```
 
 Windows PowerShell:
@@ -135,7 +136,9 @@ No Azure credentials or other secrets are required for the static demo. Cloudfla
 
 ## Security
 
-The server binds to localhost, permits only its configured UI origin, protects mutations with an ephemeral session token, validates upload type and size, sanitizes file names, and never sends Azure credentials to the client. For vulnerability reports, see [SECURITY.md](SECURITY.md).
+The full server is intended for a trusted, single-user computer. It binds to `127.0.0.1`, rejects foreign browser origins, protects mutations with an ephemeral session token, validates upload type and size, sanitizes file names, and never sends Azure credentials to the client.
+
+The Origin and session-token checks protect against cross-origin browser requests; they are not authentication between programs or operating-system users on the same computer. Do not expose the local API through a network proxy or tunnel, and do not run the full server as a shared multi-user service. For vulnerability reports, see [SECURITY.md](SECURITY.md).
 
 For questions and feature requests, use [GitHub Issues](https://github.com/soloshow-labs/radial-vocab-video-studio/issues) or follow the WeChat Official Account **一人独角show**.
 
