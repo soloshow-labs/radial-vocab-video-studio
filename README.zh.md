@@ -4,6 +4,10 @@
 
 Radial Vocab Video Studio 是一款本地优先的词根放射视频编辑器。你可以在三栏工作区中编辑词根、词缀和关联单词，实时预览画面，并通过 Azure Speech 生成带朗读的 MP4 视频。
 
+[![Radial Vocab Video Studio 编辑器与实时放射视频预览](docs/images/demo.png)](https://radial-vocab-video-studio.pages.dev/)
+
+*编辑词汇内容并实时预览放射画面。点击截图可进入在线体验版。*
+
 项目由 [SoloShow Labs（一人独角show）](https://github.com/soloshow-labs) 维护。
 
 微信公众号：一人独角show
